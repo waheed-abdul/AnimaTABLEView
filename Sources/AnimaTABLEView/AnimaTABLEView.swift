@@ -10,7 +10,7 @@ import UIKit
 @objc protocol AnimaTableViewDelegate: AnyObject {
     func numberOfRows(in section: Int) -> Int
     @objc optional func numberOfSections() -> Int
-    func cellForRow(at indexPath: IndexPath) -> UITableViewCell
+    func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell
     @objc optional func willDisplay(cell: UITableViewCell, at indexPath: IndexPath)
     func didSelectRow(at indexPath: IndexPath)
 }
@@ -29,7 +29,7 @@ class AnimaTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         precondition(tableDelegate != nil, "Table Delegate cannot be nil. Kindly conform to AnimaTableViewDelegate Protocol")
-        return tableDelegate?.cellForRow(at: indexPath) ?? UITableViewCell()
+        return tableDelegate?.cellForRow(at: indexPath, in: tableView) ?? UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
