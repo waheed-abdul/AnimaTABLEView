@@ -22,6 +22,12 @@ open class AnimaTableView: UITableView, UITableViewDelegate, UITableViewDataSour
     
     public var onlyShowsWhileReloading = false
     
+    open override func awakeFromNib() {
+        super.awakeFromNib()
+        delegate = self
+        dataSource = self
+    }
+    
     public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         precondition(tableDelegate != nil, "Table Delegate cannot be nil. Kindly conform to AnimaTableViewDelegate Protocol")
         return tableDelegate?.numberOfRows(in: section) ?? 0
