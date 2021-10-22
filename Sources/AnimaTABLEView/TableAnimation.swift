@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum TableAnimationType {
+public enum TableAnimationType {
     case none
     case fade
     case leftToRight

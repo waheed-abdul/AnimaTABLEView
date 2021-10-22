@@ -7,7 +7,7 @@
 
 import UIKit
 
-@objc protocol AnimaTableViewDelegate: AnyObject {
+@objc public protocol AnimaTableViewDelegate: AnyObject {
     func numberOfRows(in section: Int) -> Int
     @objc optional func numberOfSections() -> Int
     func cellForRow(at indexPath: IndexPath, in tableView: UITableView) -> UITableViewCell
@@ -15,28 +15,28 @@ import UIKit
     func didSelectRow(at indexPath: IndexPath)
 }
 
-class AnimaTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
+open class AnimaTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
    
-    weak var tableDelegate: AnimaTableViewDelegate?
-    var animationType: TableAnimationType = .none
+    public weak var tableDelegate: AnimaTableViewDelegate?
+    public var animationType: TableAnimationType = .none
     
-    var onlyShowsWhileReloading = false
+    public var onlyShowsWhileReloading = false
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         precondition(tableDelegate != nil, "Table Delegate cannot be nil. Kindly conform to AnimaTableViewDelegate Protocol")
         return tableDelegate?.numberOfRows(in: section) ?? 0
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         precondition(tableDelegate != nil, "Table Delegate cannot be nil. Kindly conform to AnimaTableViewDelegate Protocol")
         return tableDelegate?.cellForRow(at: indexPath, in: tableView) ?? UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableDelegate?.didSelectRow(at: indexPath)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         tableDelegate?.willDisplay?(cell: cell, at: indexPath)
         
         if onlyShowsWhileReloading {
@@ -46,7 +46,7 @@ class AnimaTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
         animate(cells: [cell])
     }
     
-    override func reloadData() {
+    open override func reloadData() {
         super.reloadData()
         
         if onlyShowsWhileReloading {
